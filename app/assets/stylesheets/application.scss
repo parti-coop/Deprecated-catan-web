@@ -1,0 +1,7 @@
+@import "bootstrap-sprockets";
+@import "bootswatch/lumen/variables";
+@import "bootstrap";
+
+body { padding-top: 80px; padding-bottom: 80px; }
+
+@import "bootswatch/lumen/bootswatch";
