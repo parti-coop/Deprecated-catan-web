@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111064859) do
+ActiveRecord::Schema.define(version: 20160113073901) do
 
   create_table "parti_sso_client_api_keys", force: :cascade do |t|
     t.integer  "user_id",                           null: false
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 20160111064859) do
 
   add_index "parti_sso_client_api_keys", ["client"], name: "index_parti_sso_client_api_keys_on_client"
   add_index "parti_sso_client_api_keys", ["user_id", "client"], name: "index_parti_sso_client_api_keys_on_user_id_and_client", unique: true
+
+  create_table "positions", force: :cascade do |t|
+    t.integer  "user_id",    null: false
+    t.text     "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "positions", ["user_id"], name: "index_positions_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",      null: false

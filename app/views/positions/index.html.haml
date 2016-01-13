@@ -1,0 +1,12 @@
+- if user_signed_in?
+  %p
+    = link_to new_position_path do
+      %i.fa.fa-edit
+      입장 만들기
+
+%ul
+  - @positions.each do |position|
+    %li
+      = link_to position.body, position
+      = position.user.nickname
+

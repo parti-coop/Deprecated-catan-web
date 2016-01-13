@@ -1,0 +1,10 @@
+%h3 입장
+
+= @position.body
+
+= link_to [:edit, @position] do
+  %i.fa.fa-edit
+  수정
+= link_to @position, method: :delete do
+  %i.fa.fa-trash
+  삭제
