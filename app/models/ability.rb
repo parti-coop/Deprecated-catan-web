@@ -8,6 +8,11 @@ class Ability
       can :manage, Position do |position|
         position.user == user
       end
+
+      can :create, Opinion
+      can :manage, Opinion do |opinion|
+        opinion.user == user
+      end
     end
   end
 end

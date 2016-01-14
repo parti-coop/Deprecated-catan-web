@@ -2,9 +2,33 @@
 
 = @position.body
 
-= link_to [:edit, @position] do
+- if can? :edit, @position
+  = link_to [:edit, @position] do
+    %i.fa.fa-edit
+    수정
+- if can? :destroy, @position
+  = link_to @position, method: :delete do
+    %i.fa.fa-trash
+    삭제
+
+
+%hr
+
+= link_to new_position_opinion_path(@position) do
   %i.fa.fa-edit
-  수정
-= link_to @position, method: :delete do
-  %i.fa.fa-trash
-  삭제
+  의견 적기
+
+%hr
+
+%ul
+  - @position.opinions.each do |opinion|
+    %li
+      = opinion.body
+      - if can? :edit, opinion
+        = link_to [:edit, opinion] do
+          %i.fa.fa-edit
+          수정
+      - if can? :destroy, opinion
+        = link_to opinion, method: :delete do
+          %i.fa.fa-trash
+          삭제

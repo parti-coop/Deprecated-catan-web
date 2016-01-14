@@ -1,0 +1,5 @@
+= form_for [@position, @opinion] do |f|
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+  = f.submit '저장', class: 'btn btn-default'

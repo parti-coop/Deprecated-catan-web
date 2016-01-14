@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160113073901) do
+ActiveRecord::Schema.define(version: 20160114013753) do
+
+  create_table "opinions", force: :cascade do |t|
+    t.integer  "user_id",     null: false
+    t.integer  "position_id", null: false
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "opinions", ["position_id"], name: "index_opinions_on_position_id"
+  add_index "opinions", ["user_id"], name: "index_opinions_on_user_id"
 
   create_table "parti_sso_client_api_keys", force: :cascade do |t|
     t.integer  "user_id",                           null: false

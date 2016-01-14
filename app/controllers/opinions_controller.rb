@@ -1,0 +1,33 @@
+class OpinionsController < ApplicationController
+  before_filter :authenticate_user!, except: [:show, :index]
+  load_and_authorize_resource :position
+  load_and_authorize_resource :opinion, through: :position, shallow: true
+
+  def new
+  end
+
+  def create
+    @opinion.user = current_user
+    if @opinion.save
+      redirect_to @opinion.position
+    else
+      render 'new'
+    end
+  end
+
+  def update
+    @opinion.update_attributes(opinion_params)
+    redirect_to @opinion.position
+  end
+
+  def destroy
+    @opinion.destroy
+    redirect_to @opinion.position
+  end
+
+  private
+
+  def opinion_params
+    params.require(:opinion).permit(:body)
+  end
+end
