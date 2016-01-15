@@ -11,6 +11,24 @@
     %i.fa.fa-trash
     삭제
 
+%hr
+
+- if can? :create, Vote
+  = link_to position_votes_path(@position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
+    %i.fa.fa-thumbs-up
+    찬성
+    = @position.votes.agree.count
+  = link_to position_votes_path(@position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
+    %i.fa.fa-thumbs-down
+    반대
+    = @position.votes.disagree.count
+- else
+  %i.fa.fa-thumbs-up
+  찬성
+  = @position.votes.agree.count
+  %i.fa.fa-thumbs-down
+  반대
+  = @position.votes.disagree.count
 
 %hr
 
@@ -24,6 +42,7 @@
   - @position.opinions.each do |opinion|
     %li
       = opinion.body
+      = opinion.choice
       - if can? :edit, opinion
         = link_to [:edit, opinion] do
           %i.fa.fa-edit

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :positions do
     shallow do
       resources :opinions
+      resources :votes
     end
   end
 end

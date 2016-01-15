@@ -42,4 +42,13 @@ class OpinionsTest < ActionDispatch::IntegrationTest
 
     assert Opinion.exists?(opinions(:opinion1).id)
   end
+
+  test 'create by voted user' do
+    assert positions(:position1).agreed? users(:two)
+
+    sign_in users(:two)
+    post position_opinions_path(position_id: positions(:position1).id, opinion: { body: 'desc'})
+
+    assert_equal 'agree', assigns(:opinion).choice
+  end
 end

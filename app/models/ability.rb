@@ -13,6 +13,8 @@ class Ability
       can :manage, Opinion do |opinion|
         opinion.user == user
       end
+
+      can :create, Vote
     end
   end
 end

@@ -8,6 +8,10 @@ class OpinionsController < ApplicationController
 
   def create
     @opinion.user = current_user
+
+    @vote = @opinion.position.voted_by current_user
+    @opinion.choice = @vote.try(:choice)
+
     if @opinion.save
       redirect_to @opinion.position
     else
