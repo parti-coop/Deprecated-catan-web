@@ -15,6 +15,11 @@ class Ability
       end
 
       can :create, Vote
+
+      can :create, Support
+      can :cancel, Support do |support|
+        support.supporter == user
+      end
     end
   end
 end

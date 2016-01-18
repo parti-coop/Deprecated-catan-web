@@ -9,4 +9,10 @@
     %li
       = link_to position.body, position
       = position.user.nickname
+      - unless current_user == position.user
+        - if position.user.leader_of?(current_user)
+          지지 중입니다.
+          = link_to '지지철회하기', cancel_supports_path(leader_id: position.user), method: :delete
+        - else
+          = link_to '지지하기', supports_path(support: { leader_id: position.user.id }), method: :post
 

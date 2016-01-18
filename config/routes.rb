@@ -8,4 +8,10 @@ Rails.application.routes.draw do
       resources :votes
     end
   end
+
+  resources :supports do
+    collection do
+      delete :cancel
+    end
+  end
 end
