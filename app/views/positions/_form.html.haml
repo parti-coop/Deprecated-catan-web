@@ -1,5 +1,24 @@
 = form_for @position do |f|
   .form-group
-    = f.label :body
+    %p 나는
+  .form-group
+    %p
+      %input{ type: 'text', placeholder: '이슈' }
+      에 관하여
+  .form-group
     = f.text_area :body, class: 'form-control'
-  = f.submit '저장', class: 'btn btn-default'
+    %p 이란 입장에
+  .form-group
+    %p
+      %select
+        %option{:value => "찬성", selected: :selected } 찬성
+        %option{:value => "반대"} 반대
+      합니다
+
+  %hr
+
+  .form-group
+    %p 왜냐하면
+    = text_area_tag :opinion, '', class: 'form-control'
+
+  = f.submit '입장 저장하기', class: 'btn btn-lg btn-primary'

@@ -1,53 +1,18 @@
-%h3 입장
+= render 'position_header'
 
-= @position.body
+%section#section-show-position-opinions
+  .container
+    .row
+      - 2.times do
+        .col-sm-6
+          - if user_signed_in? && @position.voted?(current_user)
+            .form-opinion
+              = form_for [@position, Opinion.new] do |f|
+                .form-group
+                  = f.text_area :body, placeholder: '의견 적기', class: 'form-control'
+                = f.submit '찬성 의견 남기기', class: 'btn btn-default btn-sm btn-block'
 
-- if can? :edit, @position
-  = link_to [:edit, @position] do
-    %i.fa.fa-edit
-    수정
-- if can? :destroy, @position
-  = link_to @position, method: :delete do
-    %i.fa.fa-trash
-    삭제
+          %hr
 
-%hr
-
-- if can? :create, Vote
-  = link_to position_votes_path(@position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
-    %i.fa.fa-thumbs-up
-    찬성
-    = @position.votes.agree.count
-  = link_to position_votes_path(@position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
-    %i.fa.fa-thumbs-down
-    반대
-    = @position.votes.disagree.count
-- else
-  %i.fa.fa-thumbs-up
-  찬성
-  = @position.votes.agree.count
-  %i.fa.fa-thumbs-down
-  반대
-  = @position.votes.disagree.count
-
-%hr
-
-= link_to new_position_opinion_path(@position) do
-  %i.fa.fa-edit
-  의견 적기
-
-%hr
-
-%ul
-  - @position.opinions.each do |opinion|
-    %li
-      = opinion.body
-      = opinion.choice
-      - if can? :edit, opinion
-        = link_to [:edit, opinion] do
-          %i.fa.fa-edit
-          수정
-      - if can? :destroy, opinion
-        = link_to opinion, method: :delete do
-          %i.fa.fa-trash
-          삭제
+          %ul.media-list
+            = render @position.opinions

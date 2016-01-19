@@ -1,0 +1,31 @@
+%section#section-show-position-header
+  .container
+    .jumbotron
+      .actions.pull-right
+        %small
+          = link_to '#', class: 'text-muted' do
+            %i.fa.fa-user
+            = @position.user.nickname
+          - if can? :edit, @position
+            = link_to [:edit, @position] do
+              %i.fa.fa-edit
+              수정
+          - if can? :destroy, @position
+            = link_to @position, method: :delete do
+              %i.fa.fa-trash
+              삭제
+
+      %h2.text-center{ style: 'font-weight: bold; padding: 0; margin-top: 40px; margin-bottom: 50px;' }= @position.body
+
+      .vote-box.text-center
+        = link_to position_votes_path(@position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
+          %i.fa.fa-thumbs-up
+          찬성
+          = @position.votes.agree.count
+        = link_to position_votes_path(@position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
+          %i.fa.fa-thumbs-down
+          반대
+          = @position.votes.disagree.count
+
+        %div{ style: 'margin-top: 10px;' }
+          = link_to '잘 모르겠어요', '#', class: 'text-muted'
