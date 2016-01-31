@@ -15,10 +15,14 @@
                 = f.text_area :body, placeholder: '의견은...', class: 'form-control'
               = f.submit '의견 남기기', class: 'btn btn-default btn-sm btn-block'
 
-          %hr
 
         %ul.media-list
-          = render @position.opinions
+          - if @position.opinions.best.any?
+            %hr
+          = render @position.opinions.best
+          - if @position.opinions.not_best.any?
+            %hr
+          = render @position.opinions.not_best
 
 
 

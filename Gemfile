@@ -7,6 +7,8 @@ gem 'sqlite3'
 # model
 gem 'enumerize', '~> 1.1'
 gem 'sequenced', '~> 2.0'
+gem 'counter_culture', '~> 0.1.34'
+gem 'activerecord_any_of', '~> 1.3'
 
 # auth
 gem 'devise'

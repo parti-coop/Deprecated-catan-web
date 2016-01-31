@@ -7,7 +7,7 @@ class PositionsController < ApplicationController
   end
 
   def show
-    render stauts: 404 if @position.nil?
+    render stauts: 404 and return if @position.nil?
     render 'show'
   end
 

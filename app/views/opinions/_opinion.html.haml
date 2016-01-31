@@ -20,6 +20,8 @@
     %div
       = simple_format opinion.body
     %div.text-muted
+      - if opinion.best?
+        %span.label.label-success 베스트
       - if user_signed_in? and opinion.user != current_user
         - if opinion.liked_by? current_user
           = link_to by_me_opinion_likes_path(opinion), method: :delete, style: 'text-decoration: none' do

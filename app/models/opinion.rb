@@ -3,11 +3,13 @@ class Opinion < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :position
-  has_many :likes, dependent: :destroy
-
-  default_scope { order("created_at DESC") }
+  has_many :likes, dependent: :destroy, counter_cache: true
 
   def liked_by? user
     likes.exists?(user: user)
+  end
+
+  def best?
+    position.opinions.best? self
   end
 end
