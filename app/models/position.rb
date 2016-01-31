@@ -1,7 +1,11 @@
 class Position < ActiveRecord::Base
   belongs_to :user
   has_many :opinions
-  has_many :votes
+  has_many :votes do
+    def by_leaders_of(user)
+      where(user: user.leaders)
+    end
+  end
 
   def voted_by voter
     votes.where(user: voter).first

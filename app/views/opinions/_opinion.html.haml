@@ -2,16 +2,20 @@
   .media-left
     %a{:href => "#"}
       = image_tag opinion.user.image_url, class: 'media-object img-circle', style: 'width:64px;height:64px;'
+    %p.text-center.text-muted
+      %small
+        = choice_icon(opinion)
+        = opinion.choice_text
   .media-body
     %h5.media-heading
       %strong= opinion.user.nickname
-    %div.text-muted
-      = opinion.created_at
-      - if can? :edit, opinion
-        = link_to [:edit, opinion] do
-          %i.fa.fa-edit
-      - if can? :destroy, opinion
-        = link_to opinion, method: :delete, data: { confirm: '정말 삭제하시겠습니까?'} do
-          %i.fa.fa-trash
+      %span.text-muted
+        = date_f opinion.created_at
+        - if can? :edit, opinion
+          = link_to [:edit, opinion] do
+            %i.fa.fa-edit
+        - if can? :destroy, opinion
+          = link_to opinion, method: :delete, data: { confirm: '정말 삭제하시겠습니까?'} do
+            %i.fa.fa-trash
     %div
       = simple_format opinion.body

@@ -1,0 +1,12 @@
+- if position.disagreed? current_user
+  %p
+    = link_to position_votes_path(position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
+      = choice_icon(:agree)
+      찬성
+- if position.agreed? current_user
+  %p
+    = link_to position_votes_path(position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
+      = choice_icon(:disagree)
+      찬성
+%div
+  = link_to '잘 모르겠어요', '#', class: 'text-muted'

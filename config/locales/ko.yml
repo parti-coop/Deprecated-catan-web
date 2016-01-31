@@ -1,0 +1,6 @@
+ko:
+  enumerize:
+    defaults:
+      choice:
+        agree: "찬성"
+        disagree: "반대"

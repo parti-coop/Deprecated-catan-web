@@ -2,11 +2,28 @@
 @import "bootswatch/cosmo/variables";
 @import "bootstrap";
 
+$grid-float-breakpoint: 10000px;
+
 body { padding-top: 80px; padding-bottom: 80px; }
 
 @import "bootswatch/cosmo/bootswatch";
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import "webui-popover";
 
 body {
   font-family: "Noto Sans KR", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.container {
+  max-width: 768px !important;
+}
+
+.user-image {
+  width: 20px;
+  height: 20px;
+
+  h3 & {
+    max-width: 30px;
+    max-height: 30px;
+  }
 }

@@ -3,16 +3,22 @@
 %section#section-show-position-opinions
   .container
     .row
-      - 2.times do
-        .col-sm-6
-          - if user_signed_in? && @position.voted?(current_user)
-            .form-opinion
-              = form_for [@position, Opinion.new] do |f|
-                .form-group
-                  = f.text_area :body, placeholder: '의견 적기', class: 'form-control'
-                = f.submit '찬성 의견 남기기', class: 'btn btn-default btn-sm btn-block'
+      .col-sm-12
+        - if user_signed_in? && @position.voted?(current_user)
+          .form-opinion
+            %p
+              나는 #{choice_icon(@position.voted_by(current_user))} #{@position.voted_by(current_user).choice_text}합니다.
+              %a(href="#" data-content="#{render partial: 'votes/change', locals: {position: @position}}" data-placement="right" data-html="true" data-toggle="webui-popover" type="button")
+                입장 바꾸기
+            = form_for [@position, Opinion.new] do |f|
+              .form-group
+                = f.text_area :body, placeholder: '의견은...', class: 'form-control'
+              = f.submit '의견 남기기', class: 'btn btn-default btn-sm btn-block'
 
           %hr
 
-          %ul.media-list
-            = render @position.opinions
+        %ul.media-list
+          = render @position.opinions
+
+
+

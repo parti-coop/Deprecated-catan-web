@@ -3,9 +3,7 @@
     .jumbotron
       .actions.pull-right
         %small
-          = link_to '#', class: 'text-muted' do
-            %i.fa.fa-user
-            = @position.user.nickname
+          = user_byline @position.user
           - if can? :edit, @position
             = link_to [:edit, @position] do
               %i.fa.fa-edit
@@ -17,15 +15,58 @@
 
       %h2.text-center{ style: 'font-weight: bold; padding: 0; margin-top: 40px; margin-bottom: 50px;' }= @position.body
 
-      .vote-box.text-center
-        = link_to position_votes_path(@position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
-          %i.fa.fa-thumbs-up
-          찬성
-          = @position.votes.agree.count
-        = link_to position_votes_path(@position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
-          %i.fa.fa-thumbs-down
-          반대
-          = @position.votes.disagree.count
+      - unless @position.voted?(current_user)
+        .vote-box.text-center
+          = link_to position_votes_path(@position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
+            = choice_icon(:agree)
+            찬성
+          = link_to position_votes_path(@position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
+            = choice_icon(:disagree)
+            반대
+          %div{ style: 'margin-top: 10px;' }
+            = link_to '잘 모르겠어요', '#', class: 'text-muted'
 
-        %div{ style: 'margin-top: 10px;' }
-          = link_to '잘 모르겠어요', '#', class: 'text-muted'
+      - if @position.voted?(current_user)
+        .result-box.text-center(style="margin-top: 50px")
+          %ul.nav.nav-tabs(role="tablist")
+            %li.active(role="presentation" style="width:50%")
+              %a(href="#result-leaders" role="tab" data-toggle="tab")
+                %i.fa.fa-users
+                내가 지지하는 사람들
+            %li(style="width:50%")
+              %a(href="#result-anonymous" role="tab" data-toggle="tab")
+                %i.fa.fa-cloud
+                모든 사람들
+          .tab-content
+            .tab-pane.active#result-leaders(role="tabpanel")
+              .row
+                .col-xs-6
+                  %h5
+                    = choice_icon(:agree)
+                    찬성
+                  = user_byline(current_user) if @position.agreed?(current_user)
+                  - @position.votes.agree.by_leaders_of(current_user).each do |vote|
+                    = user_byline vote.user
+                .col-xs-6
+                  %h5
+                    = choice_icon(:disagree)
+                    반대
+                  = user_byline(current_user) if @position.disagreed?(current_user)
+                  - @position.votes.disagree.by_leaders_of(current_user).each do |vote|
+                    = user_byline vote.user
+            .tab-pane#result-anonymous(role="tabpanel")
+              .row
+                .col-xs-6
+                  %h5
+                    = choice_icon(:agree)
+                    찬성
+                  - @position.votes.agree.each do |vote|
+                    = user_byline vote.user
+                .col-xs-6
+                  %h5
+                    = choice_icon(:disagree)
+                    반대
+                  - @position.votes.disagree.each do |vote|
+                    = user_byline vote.user
+
+

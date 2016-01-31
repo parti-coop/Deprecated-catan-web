@@ -1,9 +1,12 @@
 source 'https://rubygems.org'
 
-
 gem 'rails', '4.2.5'
 gem 'mysql2', '>= 0.3.13', '< 0.5'
 gem 'sqlite3'
+
+# model
+gem 'enumerize', '~> 1.1'
+gem 'sequenced', '~> 2.0'
 
 # auth
 gem 'devise'
@@ -18,14 +21,17 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.5.1'
 gem 'bootswatch-rails'
-gem 'envyable', '~> 0.2.0'
+gem 'haml-rails', '~> 0.9.0'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-webui-popover'
+end
 
 # tools
-gem 'haml-rails', '~> 0.9.0'
+gem 'envyable', '~> 0.2.0'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slack-notifier', '~> 1.4'
-gem 'sequenced', '~> 2.0'
 gem 'carrierwave', '~> 0.10.0'
 
 group :development, :test do
