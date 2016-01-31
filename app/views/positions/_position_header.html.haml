@@ -45,15 +45,19 @@
                     %h5
                       = choice_icon(:agree)
                       찬성
-                    = user_byline(current_user) if @position.agreed?(current_user)
-                    - @position.votes.agree.by_leaders_of(current_user).each do |vote|
+                      .lead
+                        %strong= @position.votes.by_leaders_me(current_user).agree_percent
+                        \%
+                    - @position.votes.agree.by_leaders_me(current_user).each do |vote|
                       = user_byline vote.user
                   .col-xs-6
                     %h5
                       = choice_icon(:disagree)
                       반대
-                    = user_byline(current_user) if @position.disagreed?(current_user)
-                    - @position.votes.disagree.by_leaders_of(current_user).each do |vote|
+                      .lead
+                        %strong= @position.votes.by_leaders_me(current_user).disagree_percent
+                        \%
+                    - @position.votes.disagree.by_leaders_me(current_user).each do |vote|
                       = user_byline vote.user
                 - else
                   .col-xs-12
@@ -65,12 +69,16 @@
                   %h5
                     = choice_icon(:agree)
                     찬성
+                    .lead
+                      %strong= @position.votes.agree.count
                   - @position.votes.agree.each do |vote|
                     = user_byline vote.user
                 .col-xs-6
                   %h5
                     = choice_icon(:disagree)
                     반대
+                    .lead
+                      %strong= @position.votes.disagree.count
                   - @position.votes.disagree.each do |vote|
                     = user_byline vote.user
 

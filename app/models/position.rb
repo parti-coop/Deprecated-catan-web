@@ -5,6 +5,18 @@ class Position < ActiveRecord::Base
     def by_leaders_of(user)
       where(user: user.leaders)
     end
+
+    def by_leaders_me(user)
+      where(user: [user.leaders, user].flatten)
+    end
+
+    %w(agree disagree).each do |choice|
+      define_method "#{choice}_percent" do
+        choice_count = where(choice: choice).count.to_f
+        total_count = where(choice: %w(agree disagree)).count.to_f
+        (100 *  choice_count / total_count).round
+      end
+    end
   end
 
   def voted_by voter
