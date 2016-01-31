@@ -9,8 +9,11 @@ class Ability
         position.user == user
       end
 
-      can :create, Opinion
+      can [:create, :respond], Opinion
       can :manage, Opinion do |opinion|
+        opinion.user == user
+      end
+      cannot :respond, Opinion do |opinion|
         opinion.user == user
       end
 

@@ -32,6 +32,6 @@ class OpinionsController < ApplicationController
   private
 
   def opinion_params
-    params.require(:opinion).permit(:body)
+    params.require(:opinion).permit(:body, :source_id)
   end
 end

@@ -17,42 +17,59 @@
         - if can? :destroy, opinion
           = link_to opinion, method: :delete, data: { confirm: '정말 삭제하시겠습니까?'} do
             %i.fa.fa-trash
+
     %div
       = simple_format opinion.body
+      - if opinion.source.present?
+        %blockquote.text-muted(style='font-size: inherit;')
+          = user_byline(opinion.source.user)
+          = date_f opinion.source.created_at
+          = simple_format (truncate(opinion.source.body) { link_to "더보기", "#" })
     %div.text-muted
       - if opinion.best?
         %span.label.label-success 베스트
-      - if user_signed_in? and opinion.user != current_user
-        - if opinion.liked_by? current_user
-          = link_to by_me_opinion_likes_path(opinion), method: :delete, style: 'text-decoration: none' do
-            %span.change-icon
-              %i.fa.fa-heart
-              %i.fa.fa-heartbeat
-            - preview_count = 3
-            - opinion.likes.limit(preview_count).each do |like|
-              = user_byline_tiny(like.user)
-            - if opinion.likes.count > preview_count
-              \+
-              = link_to '#' do
-                #{opinion.likes.count - preview_count}
+      %sapn(style='margin-right: 10px')
+        - if user_signed_in? and opinion.user != current_user
+          - if opinion.liked_by? current_user
+            = link_to by_me_opinion_likes_path(opinion), method: :delete, style: 'text-decoration: none' do
+              %span.change-icon
+                %i.fa.fa-heart
+                %i.fa.fa-heartbeat
+              - preview_count = 3
+              - opinion.likes.limit(preview_count).each do |like|
+                = user_byline_tiny(like.user)
+              - if opinion.likes.count > preview_count
+                \+
+                = link_to '#' do
+                  #{opinion.likes.count - preview_count}
+          - else
+            = link_to opinion_likes_path(opinion), method: :post, style: 'text-decoration: none' do
+              %span.change-icon
+                %i.fa.fa-heart-o
+                %i.fa.fa-heart
+              - preview_count = 3
+              - opinion.likes.limit(preview_count).each do |like|
+                = user_byline_tiny(like.user)
+              - if opinion.likes.count > preview_count
+                \+
+                = link_to '#' do
+                  #{opinion.likes.count - preview_count}
         - else
-          = link_to opinion_likes_path(opinion), method: :post, style: 'text-decoration: none' do
-            %span.change-icon
-              %i.fa.fa-heart-o
-              %i.fa.fa-heart
-            - preview_count = 3
-            - opinion.likes.limit(preview_count).each do |like|
-              = user_byline_tiny(like.user)
-            - if opinion.likes.count > preview_count
-              \+
-              = link_to '#' do
-                #{opinion.likes.count - preview_count}
-      - elsif opinion.likes.any?
-        %i.fa.fa-heart
-        - preview_count = 3
-        - opinion.likes.limit(preview_count).each do |like|
-          = user_byline_tiny(like.user)
-        - if opinion.likes.count > preview_count
-          \+
-          = link_to '#' do
-            #{opinion.likes.count - preview_count}
+          %i.fa.fa-heart
+          - preview_count = 3
+          - opinion.likes.limit(preview_count).each do |like|
+            = user_byline_tiny(like.user)
+          - if opinion.likes.count > preview_count
+            \+
+            = link_to '#' do
+              #{opinion.likes.count - preview_count}
+          = '0' if opinion.likes.count == 0
+      - if can? :respond, opinion
+        %span
+          %a(href="#" data-toggle='catan-opinion-respond' data-source-id="#{opinion.id}" data-form="#new_opinion" data-source-user-nickname="#{opinion.user.nickname}")<
+            %i.fa.fa-comment
+          = opinion.response.count
+      - else
+        %span
+          %i.fa.fa-comment
+          = opinion.response.count

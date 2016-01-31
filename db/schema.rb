@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131124913) do
+ActiveRecord::Schema.define(version: 20160131135527) do
 
   create_table "likes", force: :cascade do |t|
     t.integer  "user_id",    null: false
@@ -32,9 +32,11 @@ ActiveRecord::Schema.define(version: 20160131124913) do
     t.datetime "updated_at",              null: false
     t.string   "choice"
     t.integer  "likes_count", default: 0, null: false
+    t.integer  "source_id"
   end
 
   add_index "opinions", ["position_id"], name: "index_opinions_on_position_id"
+  add_index "opinions", ["source_id"], name: "index_opinions_on_source_id"
   add_index "opinions", ["user_id"], name: "index_opinions_on_user_id"
 
   create_table "parti_sso_client_api_keys", force: :cascade do |t|

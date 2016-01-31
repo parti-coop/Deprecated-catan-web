@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class OpinionsTest < ActionDispatch::IntegrationTest
-  test 'new' do
+  test 'create' do
     sign_in users(:two)
     assert positions(:position1).agreed?(users(:two))
     post position_opinions_path(position_id: positions(:position1).id, opinion: { body: 'desc' })
@@ -9,6 +9,13 @@ class OpinionsTest < ActionDispatch::IntegrationTest
     assert_equal users(:two), assigns(:opinion).user
     assert_equal 'desc', assigns(:opinion).body
     assert_equal 'agree', assigns(:opinion).choice
+  end
+
+  test 'respond' do
+    sign_in users(:two)
+    assert positions(:position1).agreed?(users(:two))
+    post position_opinions_path(position_id: positions(:position1).id, opinion: { body: 'desc', source_id: opinions(:opinion1).id })
+    assert_equal opinions(:opinion1), assigns(:opinion).source
   end
 
   test 'edit by owner' do

@@ -5,15 +5,22 @@
     .row
       .col-sm-12
         - if user_signed_in? && @position.voted?(current_user)
-          .form-opinion
-            %p
+
+          = form_for [@position, Opinion.new] do |f|
+            = f.hidden_field :source_id
+            %p.help-block-opinion-choice
               나는 #{choice_icon(@position.voted_by(current_user))} #{@position.voted_by(current_user).choice_text}합니다.
               %a(href="#" data-content="#{render partial: 'votes/change', locals: {position: @position}}" data-placement="right" data-html="true" data-toggle="webui-popover" type="button")
                 입장 바꾸기
-            = form_for [@position, Opinion.new] do |f|
-              .form-group
-                = f.text_area :body, placeholder: '의견은...', class: 'form-control'
-              = f.submit '의견 남기기', class: 'btn btn-default btn-sm btn-block'
+            %p.help-block-opinion-source.hidden
+              @
+              %span.nickname
+              님의 글에 응답합니다.
+              %a(href="#" data-toggle='catan-opinion-cancel-to-respond')
+                취소
+            .form-group
+              = f.text_area :body, placeholder: '의견은...', class: 'form-control'
+            = f.submit '의견 남기기', class: 'btn btn-default btn-sm btn-block'
 
 
         %ul.media-list
