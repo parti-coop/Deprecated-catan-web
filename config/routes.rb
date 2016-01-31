@@ -4,7 +4,13 @@ Rails.application.routes.draw do
 
   resources :positions do
     shallow do
-      resources :opinions
+      resources :opinions do
+        resources :likes, except: :destory do
+          collection do
+            delete :by_me, to: 'likes#destroy_by_me'
+          end
+        end
+      end
       resources :votes
     end
   end

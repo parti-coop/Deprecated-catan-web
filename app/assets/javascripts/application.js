@@ -7,4 +7,5 @@
 
 $(document).on('ready', function(e) {
   $('[data-toggle="webui-popover"]').webuiPopover();
+  $('[data-toggle="tooltip"]').tooltip();
 });

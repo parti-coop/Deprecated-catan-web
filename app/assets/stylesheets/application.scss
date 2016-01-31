@@ -27,3 +27,13 @@ body {
     max-height: 30px;
   }
 }
+
+.change-icon > .fa:nth-child(2) {
+  display: none;
+}
+.change-icon:hover > .fa:nth-child(1) {
+  display: none;
+}
+.change-icon:hover > .fa:nth-child(2) {
+  display: inherit;
+}

@@ -19,3 +19,38 @@
             %i.fa.fa-trash
     %div
       = simple_format opinion.body
+    %div.text-muted
+      - if user_signed_in? and opinion.user != current_user
+        - if opinion.liked_by? current_user
+          = link_to by_me_opinion_likes_path(opinion), method: :delete, style: 'text-decoration: none' do
+            %span.change-icon
+              %i.fa.fa-heart
+              %i.fa.fa-heartbeat
+            - preview_count = 3
+            - opinion.likes.limit(preview_count).each do |like|
+              = user_byline_tiny(like.user)
+            - if opinion.likes.count > preview_count
+              \+
+              = link_to '#' do
+                #{opinion.likes.count - preview_count}
+        - else
+          = link_to opinion_likes_path(opinion), method: :post, style: 'text-decoration: none' do
+            %span.change-icon
+              %i.fa.fa-heart-o
+              %i.fa.fa-heart
+            - preview_count = 3
+            - opinion.likes.limit(preview_count).each do |like|
+              = user_byline_tiny(like.user)
+            - if opinion.likes.count > preview_count
+              \+
+              = link_to '#' do
+                #{opinion.likes.count - preview_count}
+      - elsif opinion.likes.any?
+        %i.fa.fa-heart
+        - preview_count = 3
+        - opinion.likes.limit(preview_count).each do |like|
+          = user_byline_tiny(like.user)
+        - if opinion.likes.count > preview_count
+          \+
+          = link_to '#' do
+            #{opinion.likes.count - preview_count}

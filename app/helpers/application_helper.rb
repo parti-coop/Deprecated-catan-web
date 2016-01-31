@@ -12,6 +12,11 @@ module ApplicationHelper
     raw render(partial: 'users/byline', locals: { user: user })
   end
 
+  def user_byline_tiny(user)
+    return if user.nil?
+    raw render(partial: 'users/byline_tiny', locals: { user: user })
+  end
+
   def choice_icon(subject)
     choice_value = subject
     choice_value = subject.choice if subject.respond_to?(:choice)
