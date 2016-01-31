@@ -2,11 +2,11 @@
   %p
     = link_to position_votes_path(position, vote: { choice: :agree }), method: :post, class: 'btn btn-default' do
       = choice_icon(:agree)
-      찬성
+      찬성합니다
 - if position.agreed? current_user
   %p
     = link_to position_votes_path(position, vote: { choice: :disagree }), method: :post, class: 'btn btn-default' do
       = choice_icon(:disagree)
-      찬성
-%div
+      반대합니다
+%div.text-center
   = link_to '잘 모르겠어요', '#', class: 'text-muted'
