@@ -63,7 +63,7 @@
             \+
             = link_to '#' do
               #{opinion.likes.count - preview_count}
-          = '0' if opinion.likes.count == 0
+        = '0' if opinion.likes.count == 0
       - if can? :respond, opinion
         %span
           %a(href="#" data-toggle='catan-opinion-respond' data-source-id="#{opinion.id}" data-form="#new_opinion" data-source-user-nickname="#{opinion.user.nickname}")<
