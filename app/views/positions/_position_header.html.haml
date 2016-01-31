@@ -29,32 +29,37 @@
       - if @position.voted?(current_user)
         .result-box.text-center(style="margin-top: 50px")
           %ul.nav.nav-tabs(role="tablist")
-            %li.active(role="presentation" style="width:50%")
+            %li(class="#{'active' if current_user.leaders.any?}" role="presentation" style="width:50%")
               %a(href="#result-leaders" role="tab" data-toggle="tab")
                 %i.fa.fa-users
                 내가 지지하는 사람들
-            %li(style="width:50%")
+            %li(class="#{'active' if current_user.leaders.empty?}" style="width:50%")
               %a(href="#result-anonymous" role="tab" data-toggle="tab")
                 %i.fa.fa-cloud
                 모든 사람들
           .tab-content
-            .tab-pane.active#result-leaders(role="tabpanel")
+            .tab-pane#result-leaders(class="#{'active' if current_user.leaders.any?}" role="tabpanel")
               .row
-                .col-xs-6
-                  %h5
-                    = choice_icon(:agree)
-                    찬성
-                  = user_byline(current_user) if @position.agreed?(current_user)
-                  - @position.votes.agree.by_leaders_of(current_user).each do |vote|
-                    = user_byline vote.user
-                .col-xs-6
-                  %h5
-                    = choice_icon(:disagree)
-                    반대
-                  = user_byline(current_user) if @position.disagreed?(current_user)
-                  - @position.votes.disagree.by_leaders_of(current_user).each do |vote|
-                    = user_byline vote.user
-            .tab-pane#result-anonymous(role="tabpanel")
+                - if current_user.leaders.any?
+                  .col-xs-6
+                    %h5
+                      = choice_icon(:agree)
+                      찬성
+                    = user_byline(current_user) if @position.agreed?(current_user)
+                    - @position.votes.agree.by_leaders_of(current_user).each do |vote|
+                      = user_byline vote.user
+                  .col-xs-6
+                    %h5
+                      = choice_icon(:disagree)
+                      반대
+                    = user_byline(current_user) if @position.disagreed?(current_user)
+                    - @position.votes.disagree.by_leaders_of(current_user).each do |vote|
+                      = user_byline vote.user
+                - else
+                  .col-xs-12
+                    %div(style='margin-top: 20px') 아직 지지하는 사람이 없습니다.
+                    %a(href="#") 지지할 사람 찾기
+            .tab-pane#result-anonymous(class="#{'active' if current_user.leaders.empty?}" role="tabpanel")
               .row
                 .col-xs-6
                   %h5
