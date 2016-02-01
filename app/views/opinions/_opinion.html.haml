@@ -1,6 +1,8 @@
 %li.media[opinion]{ style: 'margin-bottom: 30px; '}
   .media-left
-    %a{:href => "#"}
+    %a(href="#" style='position: relative')
+      - if opinion.user.leader_of? current_user
+        %span.label.label-success(style='position: absolute; z-index: 10') 지지
       = image_tag opinion.user.image_url, class: 'media-object img-circle', style: 'width:64px;height:64px;'
     %p.text-center.text-muted
       %small
