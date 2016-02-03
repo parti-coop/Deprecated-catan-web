@@ -13,6 +13,7 @@ class OpinionsController < ApplicationController
     @opinion.choice = @vote.try(:choice)
 
     if @opinion.save
+      Activity.create(position: @opinion.position, trackable: @opinion, user: current_user, key: 'create_opinion')
       redirect_to @opinion.position
     else
       render 'new'

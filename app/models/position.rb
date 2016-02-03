@@ -50,6 +50,9 @@ class Position < ActiveRecord::Base
     end
   end
 
+  has_many :activities
+
+  scope :touched_by_leaders_of, -> (user) { includes(:activities).references(:activities).where(activities: { user: user.leaders }).order('activities.created_at desc') }
   def voted_by voter
     votes.where(user: voter).first
   end

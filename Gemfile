@@ -9,6 +9,7 @@ gem 'enumerize', '~> 1.1'
 gem 'sequenced', '~> 2.0'
 gem 'counter_culture', '~> 0.1.34'
 gem 'activerecord_any_of', '~> 1.3'
+gem 'by_star', '~> 2.2', '>= 2.2.1'
 
 # auth
 gem 'devise'
@@ -41,6 +42,7 @@ group :development, :test do
   gem 'minitest-focus',     '~> 1.1', '>= 1.1.2'
   gem 'guard', '~> 2.13.0'
   gem 'guard-minitest',     '~> 2.4.4'
+  gem 'timecop', '~> 0.8.0'
 end
 
 group :development do

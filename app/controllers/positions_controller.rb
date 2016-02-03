@@ -3,7 +3,11 @@ class PositionsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @positions = Position.all.order(created_at: :desc)
+    if user_signed_in? and current_user.leaders.any?
+      @positions_touched_by_leaders = Position.touched_by_leaders_of(current_user)
+    end
+
+    @positions = Position.order(created_at: :desc)
   end
 
   def show
@@ -20,6 +24,7 @@ class PositionsController < ApplicationController
   def create
     @position.user = current_user
     if @position.save
+      Activity.create(position: @position, trackable: @position, user: current_user, key: 'create_position')
       redirect_to @position
     else
       render 'new'

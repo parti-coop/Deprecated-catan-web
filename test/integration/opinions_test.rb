@@ -11,6 +11,17 @@ class OpinionsTest < ActionDispatch::IntegrationTest
     assert_equal 'agree', assigns(:opinion).choice
   end
 
+  test 'activity' do
+    sign_in users(:two)
+    post position_opinions_path(position_id: positions(:position1).id, opinion: { body: 'desc' })
+
+    activity = Activity.by(users(:two)).first
+    assert_equal assigns(:position), activity.position
+    assert_equal assigns(:opinion), activity.trackable
+    assert_equal users(:two), activity.user
+    assert_equal 'create_opinion', activity.key
+  end
+
   test 'respond' do
     sign_in users(:two)
     assert positions(:position1).agreed?(users(:two))
