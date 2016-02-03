@@ -7,7 +7,7 @@
           입장 만들기
 
     - {by_leaders: @positions_touched_by_leaders, all: @positions}.each do |key, positions|
-      - if positions.any?
+      - if positions
         .panel.panel-default
           .panel-heading
             %h4= { by_leaders: '지지하는 사람들의 최근 활동', all: '최근 입장' }[key]
