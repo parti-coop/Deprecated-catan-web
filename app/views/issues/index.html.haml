@@ -1,0 +1,12 @@
+.bs-component
+  .container
+    - if user_signed_in?
+      %p
+        = link_to new_issue_path do
+          %i.fa.fa-edit
+          이슈 만들기
+
+    %section#issues
+      %ul.list-group
+        = render @issues
+

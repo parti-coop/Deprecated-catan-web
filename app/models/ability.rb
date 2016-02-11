@@ -4,6 +4,8 @@ class Ability
   def initialize(user)
     can :read, :all
     if user
+      can :create, Issue
+
       can :create, Position
       can :manage, Position do |position|
         position.user == user
