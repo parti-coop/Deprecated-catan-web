@@ -9,6 +9,11 @@
       %a.navbar-brand{ href: positions_path }
         %strong parti.xyz
     #navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li
+          = link_to '이슈', issues_path
+        %li
+          = link_to '입장? 투표?', positions_path
       %ul.nav.navbar-nav.navbar-right
         - if user_signed_in?
           %li.dropdown
