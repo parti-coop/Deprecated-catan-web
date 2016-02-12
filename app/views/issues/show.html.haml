@@ -1,9 +1,10 @@
 %section#section-show-position-header
   .container
-    =link_to '돌아가기', :issues
+    = link_to '돌아가기', :issues
     %section#section-title
       .well
         %h2= @issue.title
+        = link_to '수정', edit_issue_path
     %section#section-outline
       .well
         %h2 outline

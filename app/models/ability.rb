@@ -5,6 +5,7 @@ class Ability
     can :read, :all
     if user
       can :create, Issue
+      can :manage, Issue, user_id: user.id
 
       can :create, Position
       can :manage, Position do |position|

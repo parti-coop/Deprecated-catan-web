@@ -19,9 +19,21 @@ class IssuesController < ApplicationController
     end
   end
 
+  def update
+    if @issue.update(update_params)
+      redirect_to @issue
+    else
+      render 'edit'
+    end
+  end
+
   private
 
   def create_params
+    params.require(:issue).permit(:title, :description)
+  end
+
+  def update_params
     params.require(:issue).permit(:title, :description)
   end
 end
