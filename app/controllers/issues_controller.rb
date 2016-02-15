@@ -1,13 +1,15 @@
 class IssuesController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :index]
   load_and_authorize_resource
+  respond_to :json, :html
 
   def show
 
   end
 
   def index
-
+    @issues = Issue.where("title like ?", "%#{params[:query]}%" ).limit(10)
+    respond_with @issues
   end
 
   def create
@@ -25,11 +27,6 @@ class IssuesController < ApplicationController
     else
       render 'edit'
     end
-  end
-
-  def autocomplete
-    @issues = Issue.where("title like ?", "%#{params[:query]}%" ).limit(10)
-    render json: @issues
   end
 
   private

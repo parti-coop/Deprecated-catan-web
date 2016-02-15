@@ -3,7 +3,7 @@
     %p 나는
   .form-group
     %p
-      %input.typeahead{ type: 'text', placeholder: '이슈', 'data-typeahead-target': '.typeahead-value' }
+      %input.typeahead{ type: 'text', placeholder: '이슈', data: { 'provider': 'typeahead', 'typeahead-target': '.typeahead-value', 'typeahead-url': issues_path, 'typeahead-display-field': 'title' } }
       에 관하여
       %input.typeahead-value{ type: 'text'}
   .form-group

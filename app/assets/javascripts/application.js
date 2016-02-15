@@ -39,30 +39,31 @@ $(document).on('ready', function(e) {
     $form.find('.help-block-opinion-source .nickname').html('')
   });
 
-  var typeaheadSource = [{ id: 1, name: 'John', year: '1977'}, { id: 2, name: 'Alex'}, { id: 3, name: 'Terry'}];
+  $('[data-provider="typeahead"]').each(function(i, elm) {
+    var $elm = $(elm);
+    var $target = $($elm.data('typeahead-target'));
+    var url = $elm.data('typeahead-url');
+    var displayField = $elm.data('typeahead-display-field');
 
-  $('input.typeahead').typeahead({
-    onSelect: function(item, typeahead) {
-      $target = $(typeahead.$element.data('typeahead-target'));
-      if($target) {
-        console.log( item.value );
-        $target.val( item.value );
-      }
-    },
-    ajax: {
-      url: "/issues/autocomplete",
-      timeout: 500,
-      displayField: "title",
-      triggerLength: 1,
-      method: "get",
-      preProcess: function (data, typeahead) {
-        console.log(  );
-        $target = $(typeahead.$element.data('typeahead-target'));
-        if( $target && data.issues.length <= 0 ) {
-          $target.val('');
-        }
-        return data.issues;
-      }
+    if (!$target || !url) {
+      return;
     }
+
+    $elm.typeahead({
+      onSelect: function(item, typeahead) {
+        if ($target) $target.val( item.value );
+      },
+      ajax: {
+        url: url,
+        timeout: 500,
+        displayField: displayField || 'name',
+        triggerLength: 1,
+        method: "get",
+        preProcess: function (data, typeahead) {
+          if( $target && data.issues.length <= 0 ) $target.val('');
+          return data.issues;
+        }
+      }
+    });
   });
 });
