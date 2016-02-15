@@ -22,7 +22,9 @@ class PositionsController < ApplicationController
   end
 
   def create
+    set_issue
     @position.user = current_user
+
     if @position.save
       Activity.create(position: @position, trackable: @position, user: current_user, key: 'create_position')
       redirect_to @position
@@ -32,7 +34,9 @@ class PositionsController < ApplicationController
   end
 
   def update
-    if @position.update_attributes(position_params)
+    @position.assign_attributes(position_params)
+    set_issue
+    if @position.save
       redirect_to @position
     else
       render 'edit'
@@ -49,4 +53,11 @@ class PositionsController < ApplicationController
   def position_params
     params.require(:position).permit(:body)
   end
+
+  def set_issue
+    @position.issue = Issue.find_or_create_by({title: params[:issue_title]}) do |issue|
+      issue.user = current_user
+    end
+  end
+
 end

@@ -97,7 +97,7 @@
                 this.options.onSelect({
                     value: value,
                     text: text
-                }, this);
+                });
             }
             this.$element
                 .val(this.updater(text))
@@ -192,7 +192,7 @@
             if (!that.ajax.xhr)
                 return;
             if (that.ajax.preProcess) {
-                data = that.ajax.preProcess(data, that);
+                data = that.ajax.preProcess(data);
             }
             // Save for selection retreival
             that.ajax.data = data;

@@ -1,5 +1,6 @@
 class Position < ActiveRecord::Base
   belongs_to :user
+  belongs_to :issue
   has_many :opinions do
     %w(agree disagree).each do |choice|
       define_method "#{choice}_maximum_likes_count" do

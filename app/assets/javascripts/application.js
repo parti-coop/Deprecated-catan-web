@@ -45,13 +45,11 @@ $(document).on('ready', function(e) {
     var url = $elm.data('typeahead-url');
     var displayField = $elm.data('typeahead-display-field');
 
-    if (!$target || !url) {
-      return;
-    }
+    if (!url) return;
 
     $elm.typeahead({
-      onSelect: function(item, typeahead) {
-        if ($target) $target.val( item.value );
+      onSelect: function(item) {
+        if ($target.length) $target.val( item.value );
       },
       ajax: {
         url: url,
@@ -59,8 +57,8 @@ $(document).on('ready', function(e) {
         displayField: displayField || 'name',
         triggerLength: 1,
         method: "get",
-        preProcess: function (data, typeahead) {
-          if( $target && data.issues.length <= 0 ) $target.val('');
+        preProcess: function (data) {
+          if( $target.length && data.issues.length <= 0 ) $target.val('');
           return data.issues;
         }
       }
