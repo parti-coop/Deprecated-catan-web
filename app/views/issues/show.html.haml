@@ -1,25 +1,32 @@
-%section#section-show-position-header
+%section#section-issue-title{ style: 'margin-top: -40px;' }
+  .jumbotron
+    .container
+      .actions.pull-right
+        %small
+          = link_to '수정', edit_issue_path
+      %h2= @issue.title
+      %p= simple_format @issue.description
+
+%section#section-issue-news
   .container
-    = link_to '돌아가기', :issues
-    %section#section-title
-      .well
-        %h2= @issue.title
-        = link_to '수정', edit_issue_path
-    %section#section-outline
-      .well
-        %h2 outline
-        = simple_format @issue.description
-    %section#section-news
-      .well
-        %h2 뉴스 컬럼 - 세미레딧 - WIP
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam laboriosam reiciendis distinctio quia illo aperiam rem sed minima, ex voluptate, quaerat, dolore. Rerum unde aut, expedita alias harum laboriosam molestias.
-    %section#section-positions
-      .well
-        %h2 토론, 투표 - 카탄 - positions
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam laboriosam reiciendis distinctio quia illo aperiam rem sed minima, ex voluptate, quaerat, dolore. Rerum unde aut, expedita alias harum laboriosam molestias.
-    %section#section-canoes
-      .well
-        %h2 조직 - 카누 - canoes
-        %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam laboriosam reiciendis distinctio quia illo aperiam rem sed minima, ex voluptate, quaerat, dolore. Rerum unde aut, expedita alias harum laboriosam molestias.
+    .page-header
+      %h3
+        뉴스
+        %small (0)
 
+%section#section-issue-positions
+  .container
+    .page-header
+      %h3
+        투표
+        %small (#{@issue.positions.count})
+    .panel.panel-default
+      %ul.list-group
+        = render @issue.positions
 
+%section#section-issue-canoes
+  .container
+    .page-header
+      %h3
+        카누
+        %small (0)
