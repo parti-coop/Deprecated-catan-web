@@ -20,9 +20,8 @@
       %h3
         투표
         %small (#{@issue.positions.count})
-    .panel.panel-default
-      %ul.list-group
-        = render @issue.positions
+    .row.position-list
+      = render @issue.positions
 
 %section#section-issue-canoes
   .container

@@ -1,20 +1,22 @@
 .bs-component
   .container
     - if user_signed_in?
-      %p
-        = link_to new_position_path do
-          %i.fa.fa-edit
-          입장 만들기
+      .jumbotron
+        .text-center
+          %h3
+            민주주의는 서로의 입장을 확인하면서 시작됩니다.
+
+          %p= link_to '투표 만들기', new_position_path, class: 'btn btn-primary btn-lg'
+
 
     - {by_leaders: @positions_touched_by_leaders, all: @positions}.each do |key, positions|
       - if positions
-        .panel.panel-default
-          .panel-heading
-            %h4= { by_leaders: '지지하는 사람들의 최근 활동', all: '최근 입장' }[key]
-            %ul.list-group
-              - positions.each do |position|
-                - if key == :by_leaders
-                  = render position, activities_concerned: position.activities.concerned_by(current_user)
-                - else
-                  = render position
+        .page-header
+          %h3= { by_leaders: '지지하는 사람들의 최근 활동', all: '최근 투표' }[key]
+        .row.position-list
+          - positions.each do |position|
+            - if key == :by_leaders
+              = render position, activities_concerned: position.activities.concerned_by(current_user)
+            - else
+              = render position
 
