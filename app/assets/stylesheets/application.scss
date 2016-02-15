@@ -1,12 +1,9 @@
 @import "bootstrap-sprockets";
-@import "bootswatch/cosmo/variables";
+@import "variables";
 @import "bootstrap";
-
-$grid-float-breakpoint: 10000px;
 
 body { padding-top: 80px; padding-bottom: 80px; }
 
-@import "bootswatch/cosmo/bootswatch";
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 @import "webui-popover";
 
