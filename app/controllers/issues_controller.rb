@@ -27,6 +27,11 @@ class IssuesController < ApplicationController
     end
   end
 
+  def autocomplete
+    @issues = Issue.where("title like ?", "%#{params[:query]}%" ).limit(10)
+    render json: @issues
+  end
+
   private
 
   def create_params

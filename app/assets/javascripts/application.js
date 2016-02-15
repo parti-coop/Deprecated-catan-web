@@ -3,6 +3,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require webui-popover
+//= require bootstrap-typeahead
 //= require_tree .
 
 $(document).on('ready', function(e) {
@@ -36,5 +37,32 @@ $(document).on('ready', function(e) {
 
     $form.find('.help-block-opinion-source').addClass('hidden')
     $form.find('.help-block-opinion-source .nickname').html('')
+  });
+
+  var typeaheadSource = [{ id: 1, name: 'John', year: '1977'}, { id: 2, name: 'Alex'}, { id: 3, name: 'Terry'}];
+
+  $('input.typeahead').typeahead({
+    onSelect: function(item, typeahead) {
+      $target = $(typeahead.$element.data('typeahead-target'));
+      if($target) {
+        console.log( item.value );
+        $target.val( item.value );
+      }
+    },
+    ajax: {
+      url: "/issues/autocomplete",
+      timeout: 500,
+      displayField: "title",
+      triggerLength: 1,
+      method: "get",
+      preProcess: function (data, typeahead) {
+        console.log(  );
+        $target = $(typeahead.$element.data('typeahead-target'));
+        if( $target && data.issues.length <= 0 ) {
+          $target.val('');
+        }
+        return data.issues;
+      }
+    }
   });
 });

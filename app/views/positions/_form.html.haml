@@ -3,8 +3,9 @@
     %p 나는
   .form-group
     %p
-      %input{ type: 'text', placeholder: '이슈' }
+      %input.typeahead{ type: 'text', placeholder: '이슈', 'data-typeahead-target': '.typeahead-value' }
       에 관하여
+      %input.typeahead-value{ type: 'text'}
   .form-group
     = f.text_area :body, class: 'form-control'
     %p 이란 입장에

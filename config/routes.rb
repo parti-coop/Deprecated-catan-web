@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   sso_devise
 
   resources :issues do
-
+    get 'autocomplete', on: :collection
   end
 
   resources :positions do
