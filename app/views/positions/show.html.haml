@@ -1,7 +1,5 @@
 = render 'position_header'
 
-= @position.issue.title
-
 %section#section-show-position-opinions
   .container
     .row
@@ -22,8 +20,7 @@
                 취소
             .form-group
               = f.text_area :body, placeholder: '의견은...', class: 'form-control'
-            = f.submit '의견 남기기', class: 'btn btn-default btn-sm btn-block'
-
+            = f.submit '의견 남기기', class: 'btn btn-primary btn-sm btn-block'
 
         %ul.media-list
           - if @position.opinions.best.any?

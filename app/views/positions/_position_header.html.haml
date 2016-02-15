@@ -13,7 +13,12 @@
               %i.fa.fa-trash
               삭제
 
-      %h2.text-center{ style: 'font-weight: bold; padding: 0; margin-top: 40px; margin-bottom: 50px;' }= @position.body
+      .position-header-title{ style: 'font-weight: bold; padding: 0; margin-top: 40px; margin-bottom: 50px;' }
+        %h4.text-center= link_to @position.issue.title, @position.issue
+        %h2.text-center
+          “
+          = @position.body
+          ”
 
       - unless @position.voted?(current_user)
         .vote-box.text-center
